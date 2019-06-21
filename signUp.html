@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Bootstrap Forms</title>
+	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="style.css" rel="stylesheet">
+</head>
+<body>
+	<div class="container">
+		<div class="page-header">
+			<h1>Sign Up</h1>
+		</div>
+		<div class="row">
+			<div class="col-sm-4">
+				<form>
+											<!--has-success-->
+											<!--has-warning-->
+					<div class="form-group" id="1stName">
+						<label for="firstName">First name</label>
+						<input type="text" id="firstName" class="form-control" placeholder="Your first name">
+					</div>
+					<div class="form-group" id="lastName">
+						<label for="lastName">Last name</label>
+						<input type="text" id="lastName" class="form-control" placeholder="Your last name">
+					</div>
+					<div class="form-group" id="email">
+						<label for="formEmail">Email address</label>
+						<input type="email" id="formEmail" class="form-control" placeholder="name@mail.com">
+					</div>
+					<div class="form-group" id="password">
+						<label for="loginPassword">Password</label>
+						<input type="password" id="loginPassword" class="form-control" placeholder="password">
+					</div>
+					<div class="form-group" id="buyer">
+					<input type="radio" name="user" id="buyer">
+					<label>Buyer</label>
+					
+					<br>
+					<div class="form-group" onclick="buyer">
+						<label for="creditcard">Credit Card ID</label>
+						<input type="text" id="creditcard" class="form-control" placeholder="card no.">
+					</div>
+					<input type="radio" name="user" id="seller">
+					<label>Seller</label>
+					</div>
+					<div class="form-group" onclick="seller">
+						<label for="bankaccount">Bank account</label>
+						<input type="text" id="bankaccount" class="form-control" placeholder="account no.">
+					</div>
+					<div class="form-group" onclick="seller">
+						<label for="taxcard">Tax card number</label>
+						<input type="text" id="taxcard" class="form-control" placeholder="card no.">
+					</div>
+					<div class="form-group" onclick="seller">
+						<label for="register">Commeriel register number</label>
+						<input type="text" id="register" class="form-control" placeholder="register number">
+					</div>
+					<button type="submit" class="btn btn-success">Create</button>
+					<button type="text" class="btn btn-default" data-dismiss="modal">Cancle</button>
+
+				</form>
+			</div>
+		</div>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

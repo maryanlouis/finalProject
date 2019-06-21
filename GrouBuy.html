@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Comptible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Groubuy.com</title>
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="style.css">	
+</head>
+<body>
+<nav class="navbar navbar-fixed-top navbar-inverse">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+
+				<a class="navbar-brand" href="index.html">GrouBuy</a>
+			</div>
+
+			<div class="collapse navbar-collapse" id="navbar-collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li class="active"><a href="GrouBuy.html">Home</a></li>
+					<li><a data-toggle="modal" data-target="#account">Account</a></li>
+					<li><a data-toggle="modal" data-target="#store">Current Offers</a></li>
+					<li><a href="wishes.html">Wishes</a></li>
+					<li><a href="deals.html">Deals</a></li>
+					<li><a href="forum.html">Forum</a></li>
+					<li><a href="info.html">Contact us</a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="cover">
+		<div class="cover-text">
+			<h1>GrouBuy</h1>
+			<p class="lead">We gurantee minimum cost maximum quality.</p>
+			<a data-toggle="modal" data-target="#store" role="button" class="btn btn-danger btn-lg">Let's get started.</a>
+		</div>
+	</div>
+	<form class="modal fade" id="account">
+			                      <!--modal-sm-->
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+						<h4 class="modal-title">User Account</h4>
+					</div> 
+						<div class="modal-body">
+							<button type="button" class="btn btn-info" data-toggle="modal" data-target="#logIn">Already have an account?</button>
+							<a type="button" class="btn btn-primary" href="signUp.html">First time?</a>
+						</div>
+						<div class="modal-footer">
+							<button type="text" class="btn btn-default" data-dismiss="modal">Cancle</button>
+						</div>
+				</div>
+			</div>
+		</form>
+		<form class="modal fade" id="logIn">
+			                      <!--modal-sm-->
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+						<h4 class="modal-title">Log In</h4>
+					</div> 
+						<div class="modal-body">
+							<form>
+								<div class="form-group" id="email">
+									<label>Email</label>
+									<input type="text" placeholder="name@mail.com" class="form-control">
+								</div>
+								<div class="form-group" id="password">
+									<label>Password</label>
+									<a href="PasswordChange.html" class="pass">I Forgot</a>
+									<input type="text" placeholder="Your Password" class="form-control">
+									<input type="checkbox" name="remember me">
+								</div>
+								<div class="form-group" id="remember">
+									<label>remember me</label>
+									<br>
+								</div>
+								<div class="form-group">
+									<h4>Don't have an account?</h4><br>
+									<a href="signUp.html">Create an account</a>
+								</div>
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="text" class="btn btn-default" data-dismiss="modal">Cancle</button>
+							<button type="submit" class="btn btn-primary">Go In</button>
+						</div>
+				</div>
+			</div>
+		</form>
+		<form class="modal fade" id="store">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+						<h4 class="modal-title">Shopping as</h4>
+					</div>
+					<div class="modal-body">
+						<a type="button" class="btn btn-primary" href="storeSeller.html">A seller</a>
+						<a type="button" class="btn btn-primary" href="storeBuyer.html">A buyer</a>
+					</div>
+				</div>
+			</div>
+		</form>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

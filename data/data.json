@@ -1,0 +1,92 @@
+[
+	{
+		"id": 1,
+		"SellerName":"Mai",
+		"type": "Clothes",
+		"discount": 2200,
+		"quantity": 30,
+		"offer":"T-shirt",
+		"description": "Excellent Coton T-Shirt",
+		"details":{
+			"color":"red",
+			"size":"XLL",
+			"TradeMark":"Cotonile"
+		},
+		"image": "product-1"
+	},
+	{
+		"id": 2,
+		"SellerName":"Eslam",
+		"type": "Electrontics",
+		"discount": 5000,
+		"quantity": 1,
+		"offer":"Laptop",
+		"description": "Good shape XP OS, 8 MHz Ram, core i5",
+		"details":{
+			"color":"black",
+			"size":"80*60",
+			"TradeMark":"hp"
+		},
+		"image": "product-2"
+	},
+	{
+		"id": 3,
+		"SellerName":"Maryan",
+		"type": "Sports",
+		"discount": 300,
+		"quantity": 2,
+		"offer":"Shose",
+		"description": "Great sport shose",
+		"details":{
+			"color":"white",
+			"size":"40",
+			"TradeMark":"Nike"
+		},
+		"image": "product-3"
+	},
+	{
+		"id": 4,
+		"SellerName":"Marwa",
+		"type": "Electronics",
+		"discount": 2000,
+		"quantity": 2,
+		"offer":"Mobile",
+		"description": "Best mobile ever! android, processor core i3, ram 8 GB",
+		"details":{
+			"color":"silver",
+			"size":"40*30",
+			"TradeMark":"hwawi"
+		},
+		"image": "product-4"
+	},
+	{
+		"id": 5,
+		"SellerName":"Alaa",
+		"type": "Kitchine",
+		"discount": 200,
+		"quantity": 2,
+		"offer":"cookpan",
+		"description": "Nice cookpan",
+		"details":{
+			"color":"Gray",
+			"size":"30",
+			"TradeMark":"Zahran"
+		},
+		"image": "product-5"
+	},
+	{
+		"id": 6,
+		"SellerName":"Esraa",
+		"type": "Sports",
+		"discount": 100,
+		"quantity": 5,
+		"offer":"Ball",
+		"description": "football",
+		"details":{
+			"color":"Gray-white",
+			"size":"30",
+			"TradeMark":"A"
+		},
+		"image": "product-6"
+	}
+]

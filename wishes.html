@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Wishes</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body ng-app="ngStore" ng-controller="storeController">
+
+	<!--<button ng-click="sayHello()">Say Hello</button>-->
+	<!--<button ng-click="showMessage = true">Show Message</button>
+
+	<button ng-click="showMessage = false">Hide Message</button>-->
+	<!--<button ng-click="showMessage = !showMessage">Toggle Message</button>
+
+	<h2 ng-show="showMessage == true">Secret Message</h2>
+	<input type="text" placeholder="Leave a message" ng-model="message">
+	<h2>{{message}}</h2>-->
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Wishes</a>
+			</div>
+		</div>
+	</nav>
+
+<div class="container">
+	<div class="col-sm-12 price-form">
+
+		<button class="btn btn-primary" ng-click="addListing = !addListing" ng-show="!addListing" id="add">Add Listing</button>
+
+		<button class="btn btn-danger" ng-click="addListing = !addListing" ng-show="addListing">Close</button>
+
+		<div class="listing-form" ng-if="addListing">
+			<h3>Add a Listing</h3>
+
+			<div class="row listing-form-row">
+				<div class="col-sm-4">
+					<div class="input-group" id="SellerName">
+						<span class="input-group-addon">Seller Name</span>
+						<input type="text" placeholder="Enter the offer no." class="form-control" ng-model="newListing.SellerName">
+					</div>
+				</div>
+
+						<div class="col-sm-4">
+					<div class="input-group" id="description">
+						<span class="input-group-addon">Description</span>
+						<textarea type="text" placeholder="Enter the description" class="form-control" ng-model="newListing.description"></textarea> 
+					</div>
+				</div>
+
+			</div>
+
+			<div class="row listing-form-row">
+
+				<div class="col-sm-4">
+					<div class="input-group" id="offerName">
+						<span class="input-group-addon">Product Name</span>
+						<input type="text" placeholder="Enter the Product Name" class="form-control" ng-model="newListing.offer">
+					</div>
+				</div>
+				
+			</div>
+			<button class="btn btn-primary listing-button" ng-click="addOffer(newListing)" ng-show="addListing">Add</button>
+			<pre>{{newListing | json}}</pre>
+			
+		</div>
+		<div class="listing-form" ng-if="editListing">
+	<h3>Edit Listing</h3>
+
+	<div class="row listing-form-row">
+				<div class="col-sm-4">
+					<div class="input-group" id="SellerName">
+						<span class="input-group-addon">Seller Name</span>
+						<input type="text" placeholder="Enter the offer no." class="form-control" ng-model="existingListing.SellerName">
+					</div>
+				</div>
+
+			
+				<div class="col-sm-4" id="offerName">
+					<div class="input-group">
+						<span class="input-group-addon">Product Name</span>
+						<input type="text" placeholder="Enter the Product Name" class="form-control" ng-model="existingListing.offer">
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="input-group" id="description">
+						<span class="input-group-addon">Description</span>
+						<textarea type="text" placeholder="Enter the description" class="form-control" ng-model="existingListing.description"></textarea> 
+					</div>
+				</div>
+
+				
+			
+			</div>
+
+
+			<button class="btn btn-primary listing-button" ng-click="saveOfferEdit()" ng-show="editListing" id="edit">Save</button>
+
+			<button class="btn btn-danger listing-button" ng-click="deleteOffer(existingListing)" ng-show="editListing" id="delete">Delete</button>
+	</div>
+</div>
+	</div>
+</div>
+
+	<div class="container">
+		<div class="col-sm-4" ng-repeat="offer in offers | storeFilter:priceInfo | orderBy: '-id'">
+			<div class="thumbnail">
+				
+				<div class="caption">
+					<!--<h3>{{crib.address}}</h3>
+					<p><strong>Type:</strong>{{ crib.type }}</p>
+					<p><strong>Description:</strong>{{ crib.description}}</p>
+					<p><strong>Price:</strong>{{ crib.price | currency}}</p>-->
+					<div ng-hide="showDetails === true">
+						
+						<p class="label label-primary label-sm">Seller Name: {{offer.SellerName}}</p>
+							
+						</h4>
+					</div>
+
+					<button class="btn btn-xs btn-success"
+									ng-hide="showDetails === true"
+									ng-click="showDetails = !showDetails">
+										Details
+					</button>
+
+					<button class="btn btn-success" ng-show="showDetails" ng-click="editOffer(offer)">Edit</button>
+
+					<button class="btn btn-xs btn-danger"
+									ng-show="showDetails === true"
+									ng-click="showDetails = !showDetails">
+										Close
+					</button>
+
+					
+						<p>Description: {{offer.description}}</p>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!--<div class="well" ng-repeat="crib in cribs">
+		<h3>{{ crib.address }}</h3>
+		<p><strong>Type:</strong>{{ crib.type }}</p>
+		<p><strong>Description:</strong>{{ crib.description}}</p>
+		<p><strong>Price:</strong>{{ crib.price | currency}}</p>
+	</div>-->
+	<!--<h1>Hello ng-cribs</h1>-->
+	<!--<h1>{{ hello }}</h1>-->
+	<!--<h1>{{ 5+7 }}</h1>-->
+	<!--<h1>{{ hello + ' How are you?'}}</h1>-->
+	<!--<pre>{{ cribs | json }}</pre>-->
+	<!--<div ng-app="ngCribs"></div>-->
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.4/ui-bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.4/ui-bootstrap-tpls.min.js"></script>
+<script src="app.js"></script>
+<script src="scripts/storeController.js"></script>
+<script src="scripts/storeFactory.js"></script>
+<script src="scripts/storeFilter.js"></script>
+</html>

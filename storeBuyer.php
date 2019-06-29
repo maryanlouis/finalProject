@@ -1,178 +1,187 @@
 <?php
 include ('include/connection.php');
 	session_start();
-    //include ('GrouBuy.php');
-	//if (!$_SESSION['loggedInUser']) {
-	//	header("Location: signUp.php");
-	//}
+ if (isset($_SESSION['loggedInUser'])) {
+		$ID=$_SESSION['logInId'];
+$qu="SELECT user_id FROM seller WHERE user_id= '$ID'";
+
+$q=mysqli_query($conn,$qu);
+    if (mysqli_num_rows($q)>0) {
+    	while ($row = mysqli_fetch_assoc($q)) {
+    		$id=$row['user_id'];
+    		if (isset($id)) {
+		echo "Not allowed";
+			header("Location: GrouBuy.php");
+			}
+    	}
+		
+			
+    }
+    	
+}
+	if (!$_SESSION['loggedInUser']) {
+		header("Location: GrouBuy.php");
+	}
 	
 	include ('include/functions.php');
-$_SESSION['category']=mysqli_query($conn, "SELECT category_name FROM category");
-$row = mysqli_fetch_assoc($_SESSION['category']);
-$categoryName=$row['category_name'];
-$_SESSION['discount']=mysqli_query($conn, "SELECT discount FROM offer");
-$row = mysqli_fetch_assoc($_SESSION['discount']);
-$discount=$row['discount'];
-$_SESSION['start']=mysqli_query($conn, "SELECT start_date FROM offer");
-$row = mysqli_fetch_assoc($_SESSION['start']);
-$startDate=$row['start_date'];
-$_SESSION['end']=mysqli_query($conn, "SELECT end_date FROM offer");
-$row = mysqli_fetch_assoc($_SESSION['end']);
-$endDate=$row['end_date'];
-$_SESSION['offerName']=mysqli_query($conn, "SELECT offer_name FROM offer");
-$row = mysqli_fetch_assoc($_SESSION['offerName']);
-$offerName=$row['offer_name'];
-$_SESSION['userId']=mysqli_query($conn, "SELECT user_id FROM seller");
-$row = mysqli_fetch_assoc($_SESSION['userId']);
-$userID=$row['user_id'];
-$_SESSION['sellerName']=mysqli_query($conn, "SELECT user_first_name, user_last_name FROM user WHERE user_id=userID");
-$row = mysqli_fetch_assoc($_SESSION['sellerName']);
-$sellerName=$row['user_first_name', 'user_last_name'];
+	$myoffer = array();
+$query=mysqli_query($conn, "SELECT * FROM offer WHERE deleted=0");
+if (mysqli_num_rows($query) > 0){
+	while ($row = mysqli_fetch_assoc($query)) {
+		$query2="SELECT user_firstname, user_lastname FROM user WHERE user_id=".$row['user_id'];
+		 $result2 = mysqli_query($conn, $query2);
+		 $row2 = mysqli_fetch_assoc($result2);
+		 $row['user']=array_values($row2);
+		$myoffers[]= $row;
+		
+	}
+
+ }
+	 else{
+	$alertMessage = "<div class='alert alert-warning'>Nothing to see here.<a href='clients.php'>Head back</a></div>";
+	}
 mysqli_close($conn);
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
-	<meta charset="utf-8">
-	<title>Store</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-	<link rel="stylesheet" href="style.css">
+    <meta charset="utf-8">
+    <title>Store</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body ng-app="ngStore" ng-controller="storeController">
 
-	<!--<button ng-click="sayHello()">Say Hello</button>-->
-	<!--<button ng-click="showMessage = true">Show Message</button>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Store</a>
+            </div>
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input type="text" name="searchText" class="form-control" placeholder="Search site...">
+                </div>
+                <button type="submit" name="search" class="btn btn-primary">Go!</button>
+            </form>
+            <a class="navbar-brand navbar-right"  href="GrouBuy.php">Home</a>
+            <a class="navbar-brand navbar-right" href="logout.php">Logout??</a>
+            <a class="navbar-brand navbar-right" href="#"><?php 
 
-	<button ng-click="showMessage = false">Hide Message</button>-->
-	<!--<button ng-click="showMessage = !showMessage">Toggle Message</button>
+					echo isset($_SESSION['loggedInUser'])?$_SESSION['loggedInUser']:' ';
 
-	<h2 ng-show="showMessage == true">Secret Message</h2>
-	<input type="text" placeholder="Leave a message" ng-model="message">
-	<h2>{{message}}</h2>-->
-	<nav class="navbar navbar-inverse">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#">Store</a>
-			</div>
-		</div>
-	</nav>
+					?></a>
+        </div>
+    </nav>
 
-<div class="container">
-	<div class="col-sm-12 price-form">
-		<div class="row price-form-row" ng-if="!addListing">
-		<div class="col-sm-6">
-			<div class="input-group">
-				<span class="input-group-addon">Min Price</span>
-				<select name="minPrice" id="minPrice" ng-model="priceInfo.min" class="form-control">
-					<option value="100000">$100,000</option>
-					<option value="200000">$200,000</option>
-					<option value="300000">$300,000</option>
-					<option value="400000">$400,000</option>
-					<option value="500000">$500,000</option>
-					<option value="600000">$600,000</option>
-					<option value="700000">$700,000</option>
-					<option value="800000">$800,000</option>
-					<option value="900000">$900,000</option>
-					<option value="1000000">$1,000,000</option>
-				</select>
-			</div>
-		</div>
+    <div class="container">
+        <div class="col-sm-12 price-form">
+            <div class="row price-form-row" ng-if="!addListing">
 
-		<div class="col-sm-6">
-			<div class="input-group">
-				<span class="input-group-addon">Max Price</span>
-				<select name="maxPrice" id="maxPrice" ng-model="priceInfo.max" class="form-control">
-					<option value="100000">$100,000</option>
-					<option value="200000">$200,000</option>
-					<option value="300000">$300,000</option>
-					<option value="400000">$400,000</option>
-					<option value="500000">$500,000</option>
-					<option value="600000">$600,000</option>
-					<option value="700000">$700,000</option>
-					<option value="800000">$800,000</option>
-					<option value="900000">$900,000</option>
-					<option value="1000000">$1,000,000</option>
-				</select>
-			</div>
-		</div>
-	</div>
+                <div class="col-sm-6">
+                    <div class="input-group">
+                        <span class="input-group-addon">Min Price</span>
+                        <select name="minPrice" id="minPrice" ng-model="priceInfo.min" class="form-control">
+                            <option value="100000">$100,000</option>
+                            <option value="200000">$200,000</option>
+                            <option value="300000">$300,000</option>
+                            <option value="400000">$400,000</option>
+                            <option value="500000">$500,000</option>
+                            <option value="600000">$600,000</option>
+                            <option value="700000">$700,000</option>
+                            <option value="800000">$800,000</option>
+                            <option value="900000">$900,000</option>
+                            <option value="1000000">$1,000,000</option>
+                        </select>
+                    </div>
+                </div>
 
-			<!--<button class="btn btn-primary listing-button" ng-click="saveOfferEdit()" ng-show="editListing" id="edit">Save</button>
+                <div class="col-sm-6">
+                    <div class="input-group">
+                        <span class="input-group-addon">Max Price</span>
+                        <select name="maxPrice" id="maxPrice" ng-model="priceInfo.max" class="form-control">
+                            <option value="100000">$100,000</option>
+                            <option value="200000">$200,000</option>
+                            <option value="300000">$300,000</option>
+                            <option value="400000">$400,000</option>
+                            <option value="500000">$500,000</option>
+                            <option value="600000">$600,000</option>
+                            <option value="700000">$700,000</option>
+                            <option value="800000">$800,000</option>
+                            <option value="900000">$900,000</option>
+                            <option value="1000000">$1,000,000</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<button class="btn btn-primary listing-button" ng-click="saveOfferEdit()" ng-show="editListing" id="edit">Save</button>
 
 			<button class="btn btn-danger listing-button" ng-click="deleteOffer(existingListing)" ng-show="editListing" id="delete">Delete</button>-->
 
-</div>
-	</div>
+    <div class="container">
+        <!-- <div class="col-sm-12"> -->
+        <?php
+	foreach ($myoffers as $val) {
+?>
+        <div class="thumbnail col-lg-3">
+            <a href="offer_lines.php?offer_number=<?php echo $val['offer_number']?>"><img
+                    ng-src="images/<?php echo $val['image']; ?>.jpg" alt="" /></a>
+            <div class="caption">
 
+                <div ng-hide="showDetails === true">
+                    <h3><i class="glyphicon glyphicon-tag"></i><?php echo $val['discount']; ?> </h3>
+                    <br>
+                    <p class="label label-primary label-sm">Seller Name:
+                        <?php echo $val['user'][0]; echo $val['user'][1] ;?> </p>
+                    <br>
+                    <p class="label label-primary label-sm">Offer Name: <?php echo $val['offer_name']; ?> </p>
+                    <br>
 
-	<a href="products.php"><div class="container">
-		<div class="col-sm-4" ng-repeat="offer in offers | storeFilter:priceInfo | orderBy: '-id'">
-			<div class="thumbnail">
-				<img ng-src="images/{{offer.image}}.jpg" alt="" />
-				<div class="caption">
-					<!--<h3>{{crib.address}}</h3>
-					<p><strong>Type:</strong>{{ crib.type }}</p>
-					<p><strong>Description:</strong>{{ crib.description}}</p>
-					<p><strong>Price:</strong>{{ crib.price | currency}}</p>-->
-					<div ng-hide="showDetails === true">
-						<h3><i class="glyphicon glyphicon-tag"></i>{{ offer.discount | currency}}<?php echo $discount; ?> </h3>
-						<p class="label label-primary label-sm">Seller Name: {{offer.SellerName}} <?php echo $sellerName ; ?> </p>
-						<p class="label label-primary label-sm">Offer Name: {{offer.offer}} <?php echo $offerName ?> </p>
-							<span class="label label-primary label-sm">Category: {{ offer.type }} <?php echo $categoryName; ?> </span>
-						</h4>
-					</div>
-					
-					<a href="order_line_quantity.php" role="button" name="addToCard" class="btn btn-info btn-xs" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?> ?offerid=<?php echo $offerID; ?>" method="post">Add to card?</a>
+                </div>
 
-					<button class="btn btn-xs btn-success"
-									ng-hide="showDetails === true"
-									ng-click="showDetails = !showDetails">
-										Details
-					</button>
+                <a href="order_line_quantity.php?offerid=<?php echo $val['offer_number'];?>" role="button"
+                    name="addToCard" class="btn btn-info btn-xs">Add to card?</a>
 
-<!--					<button class="btn btn-success" ng-show="showDetails" ng-click="editOffer(offer)">Edit</button>-->
+                <button class="btn btn-xs btn-success" ng-hide="showDetails === true"
+                    ng-click="showDetails = !showDetails">
+                    Details
+                </button>
 
-					<button class="btn btn-xs btn-danger"
-									ng-show="showDetails === true"
-									ng-click="showDetails = !showDetails">
-										Close
-					</button>
+                <button class="btn btn-xs btn-danger" ng-show="showDetails === true"
+                    ng-click="showDetails = !showDetails">
+                    Close
+                </button>
 
-					<div class="details" ng-show="showDetails ===true">
-						<h4>
-							<a href="order.php" role="button" name="finish" class="btn btn-info btn-lg" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>?offerid=<?php echo $offerID; ?> ?>?userid=<?php echo $userID; ?>" method="post">finish an order</a>
-							<!--<span class="label label-primary">Image: {{offer.image}}</span>-->
-							
-							<p class="label label-primary label-sm">Start Date: {{offer.start}} <?php echo $startDate; ?> </p>
-						<p class="label label-primary label-sm">End Date: {{offer.start}} <?php echo $endDate; ?> </p>
-						</h4>
-						
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</a>
-</div>
+                <div class="details" ng-show="showDetails ===true">
+                    <h4>
+                        <a href="order.php?offerid=<?php echo $val['offer_number'];?>&userid=<?php echo $val['user_id'];?>"
+                            role="button" name="finish" class="btn btn-info btn-xs">finish an order</a>
 
-	<!--<div class="well" ng-repeat="crib in cribs">
-		<h3>{{ crib.address }}</h3>
-		<p><strong>Type:</strong>{{ crib.type }}</p>
-		<p><strong>Description:</strong>{{ crib.description}}</p>
-		<p><strong>Price:</strong>{{ crib.price | currency}}</p>
-	</div>-->
-	<!--<h1>Hello ng-cribs</h1>-->
-	<!--<h1>{{ hello }}</h1>-->
-	<!--<h1>{{ 5+7 }}</h1>-->
-	<!--<h1>{{ hello + ' How are you?'}}</h1>-->
-	<!--<pre>{{ cribs | json }}</pre>-->
-	<!--<div ng-app="ngCribs"></div>-->
+                        <p class="label label-primary label-sm">Start Date: <?php echo $val['start_date']; ?> </p>
+                        <br>
+                        <p class="label label-primary label-sm">End Date: <?php echo $val['end_date']; ?> </p>
+                    </h4>
+
+                </div>
+            </div>
+        </div>
+        <?php
+	}
+?>
+        <!-- </div> -->
+    </div>
+
+    <script src="scripts/angular.min.js"></script>
+    <script src="scripts/ui-bootstrap.min.js"></script>
+    <script src="scripts/ui-bootstrap-tpls.min.js"></script>
+	<script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="app.js"></script>
+    <script src="scripts/storeController.js"></script>
+    <script src="scripts/storeFactory.js"></script>
+    <script src="scripts/storeFilter.js"></script>
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.4/ui-bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.4/ui-bootstrap-tpls.min.js"></script>
-<script src="app.js"></script>
-<script src="scripts/storeController.js"></script>
-<script src="scripts/storeFactory.js"></script>
-<script src="scripts/storeFilter.js"></script>
+
 </html>

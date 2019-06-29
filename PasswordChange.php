@@ -23,8 +23,9 @@
 	}else{
 		$alertMessage = "<div class='alert alert-warning'>Nothing to see here.<a href='clients.php'>Head back</a></div>";
 	}*/
-
+$error="";
 	if (isset($_POST['update'])) {
+		
 		//$userName = validateFormData($_POST["userName"]);
 		$Email = validateFormData($_POST["email"]);
 		//$clientPhone = validateFormData($_POST["clientPhone"]);

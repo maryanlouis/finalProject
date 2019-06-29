@@ -25,10 +25,13 @@ html, body, .cover{
 }
 
 nav.navbar-inverse{
-	background: rgba(0,0,0,0.5);
+	background: rgba(14, 13, 13, 0.473);
 	border: none;
+	font-size: large;
 }
-
+nav .container #navbar-collapse a{
+	color:white;
+}
 .pass{
 	margin: 40px;
 	text-align: center;
@@ -68,4 +71,23 @@ label{
 }
 #info .modal-body{
 	background: pink;
+}
+.mymargin{
+	margin: 9px !important;
+}
+.cover .cover-text#gotostore{
+	padding-top: 420px;
+	padding-left: 20px;
+	text-align: start;
+	vertical-align: top;
+	color: white;
+}
+.col-lg-3{
+	vertical-align: middle;
+	margin-left: 10px;
+	padding-left: 20px;
+	margin-right: 10px;
+}
+iframe{
+	border: none
 }

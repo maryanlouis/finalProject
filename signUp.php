@@ -1,12 +1,10 @@
 <?php
 	include ('include/connection.php');
 	session_start();
-    //include ('GrouBuy.php');
-	//if (!$_SESSION['loggedInUser']) {
-	//	header("Location: signUp.php");
-	//}
-	
+  
+		
 	include ('include/functions.php');
+	$fnameError=$lnameError=$EmailError=$passwordError=$userError=$creditcardError=$taxcardError=$bankaccountError=$creditcardError=$registerError="";
 	if (isset($_POST['add'])) {
 		$firstName = $lastName = $clientEmail =$password=$Address=$creditcard=$bankaccount=$taxcard=$register="";
 
@@ -62,7 +60,7 @@
 
 
 		if ($firstName && $lastName && $clientEmail) {
-			//$id="";
+		
 			$query1 = "INSERT INTO user(user_firstname, user_lastname,user_email, password, Address)VALUES('$firstName', '$lastName', '$clientEmail', '$passwordHash', '$Address');";
 				$result1 = mysqli_query($conn, $query1);
 				$id =mysqli_query($conn, "SELECT LAST_INSERT_ID() as UserID");
@@ -76,7 +74,7 @@
 					$query3="INSERT INTO seller(bank_account, tax_card, commercial_register, user_id)VALUES('$bankaccount','$taxcard', '$register','$userId')";
 					$result3 = mysqli_query($conn, $query3);
 					}
-			//echo "Hello";*/
+		
 
 			if ($result1) {
 
@@ -90,13 +88,13 @@
 	//include ('includes/header.php'); 
 ?>
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>Bootstrap Forms</title>
-	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 	<link href="style.css" rel="stylesheet">
 </head>
 <body>
@@ -171,7 +169,8 @@
 			</div>
 		</div>
 	</div>
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	
+
     <script src="bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

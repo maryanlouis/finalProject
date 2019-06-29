@@ -2,36 +2,44 @@
 
 	include ('include/connection.php');
 	session_start();
-
 	include ('include/functions.php');
+	//$_SESSION['loggedInUser']="";
+	$loginError=" ";
 	if (isset($_POST['login'])) {
 		$formEmail = validateFormData($_POST['email']);
-		$formPass = validateFormData($_POST['password']);
+		$formPass = $_POST['password'];
 
 		//include ('includes/connection.php');
-		$query = "SELECT user_firstname, user_lastname, password FROM user WHERE email='$formEmail'";
+		$query = "SELECT user_id, user_firstname, user_lastname, password FROM user WHERE user_email='$formEmail'";
 		$result = mysqli_query($conn, $query);
 
-		if (mysqli_num_rows($result) > 0) {
+		if (mysqli_num_rows($result)>0) {
 			while ($row = mysqli_fetch_assoc($result)) {
 				$firstname = $row['user_firstname'];
-				$lastname = $row['user_lastname'];
 				$hashedPass = $row['password'];
+				$id=$row['user_id'];
+				$lastname=$row['user_lastname'];
+
 			}
 
 			if (password_verify($formPass, $hashedPass)) {
-				$_SESSION['loggedInUser'] = $firstName;
+				$_SESSION['loggedInUser'] = $firstname;
+				$_SESSION['logInId']=$id;
+				$_SESSION['user_lastname']=$lastname;
+				echo $_SESSION['loggedInUser'].'<br>';
+				
 
-				header("Location: GrouBuy.php");
+				header("Location:GrouBuy.php");
+			
 			}else{
-				$loginError= "<div class='alert alert-danger'>Wrong username / password combination. Try again</div>";
+				$loginError= "<div class='alert alert-danger'>Wrong username / password combination. Try again<a class='close' data-dismiss='alert'>&times;</a></div>";
 			}
 
 		}else{
 			$loginError= "<div class='alert alert-danger'>No such user in database. Please try again. <a class='close' data-dismiss='alert'>&times;</a></div>";
 		}
 	}
-	
+		
 	mysqli_close($conn);
 	//include ('includes/header.php');
 
@@ -72,16 +80,22 @@
 					<li><a href="deals.php">Deals</a></li>
 					<li><a href="forum.php">Forum</a></li>
 					<li><a href="info.html">Contact us</a></li>
-					<?php echo $formEmail;?>
+					<li><a href="logout.php">Logout??</a></li>
+					<a class="navbar-brand" href="#"><?php 
+
+					echo isset($_SESSION['loggedInUser'])?$_SESSION['loggedInUser']:' ';
+
+					?></a>
 				</ul>
 			</div>
 		</div>
 	</nav>
 	<div class="cover">
-		<div class="cover-text">
-			<h1>GrouBuy</h1>
-			<p class="lead">We gurantee minimum cost maximum quality.</p>
-			<a data-toggle="modal" data-target="#store" role="button" class="btn btn-danger btn-lg">Let's get started.</a>
+		<div class="cover-text" id="gotostore">
+			<?php echo $loginError;?>
+			<!-- <h1>GrouBuy</h1> -->
+			<!-- <p class="lead">We gurantee minimum cost maximum quality.</p> -->
+			<a  data-toggle="modal" data-target="#store" role="button" class="btn btn-default btn-lg">Let's get started.</a>
 		</div>
 	</div>
 	<form class="modal fade" id="account">
@@ -109,7 +123,7 @@
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
 						<h4 class="modal-title">Log In</h4>
-						<?php echo $loginError;?>
+						
 					</div> 
 						<div class="modal-body">
 							<form>
@@ -155,7 +169,7 @@
 				</div>
 			</div>
 		</form>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

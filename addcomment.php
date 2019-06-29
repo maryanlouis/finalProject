@@ -19,7 +19,7 @@ if (isset($_POST['add'])) {
         $query1 = "INSERT INTO `comment`(datenow,commentText, deleted,parent,user_id)VALUES(CURRENT_TIMESTAMP,'$comment',0,$option,'$userID')";
         $result1 = mysqli_query($conn, $query1);
         if($result1){
-            header("Location: addcomment.php?alert=success");
+            header("Location: forum.php?alert=success");
         }else{
             echo "Error: ".$query1."<br>".mysqli_error($conn);
         }

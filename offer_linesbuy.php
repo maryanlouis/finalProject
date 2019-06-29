@@ -81,8 +81,6 @@
 			</div>
 		</div>
 		
-		<a class="btn btn-primary" href="addofferline.php?" id="add">Add components to the offer</a>
-		
 		</div>		
 </div>
 		

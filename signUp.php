@@ -78,7 +78,7 @@
 
 			if ($result1) {
 
-				header("Location: signUp.php?alert=success&Id=".$userId);
+				header("Location: GrouBuy.php?alert=success&Id=".$userId);
 			}else{
 				echo "Error: ".$query1."<br>".mysqli_error($conn);
 			}

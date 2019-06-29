@@ -127,7 +127,7 @@ mysqli_close($conn);
 	foreach ($myoffers as $val) {
 ?>
         <div class="thumbnail col-lg-3">
-            <a href="offer_lines.php?offer_number=<?php echo $val['offer_number']?>"><img
+            <a href="offer_linesbuy.php?offer_number=<?php echo $val['offer_number']?>"><img
                     ng-src="images/<?php echo $val['image']; ?>.jpg" alt="" /></a>
             <div class="caption">
 

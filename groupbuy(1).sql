@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 28, 2019 at 06:45 PM
+-- Generation Time: Jun 29, 2019 at 03:14 PM
 -- Server version: 10.1.35-MariaDB
 -- PHP Version: 7.2.9
 
@@ -69,7 +69,8 @@ CREATE TABLE `comment` (
   `comment_id` int(20) NOT NULL,
   `datenow` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
   `commentText` text NOT NULL,
-  `parent` int(10) NOT NULL,
+  `deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `parent` int(10) DEFAULT NULL,
   `user_id` int(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -77,10 +78,15 @@ CREATE TABLE `comment` (
 -- Dumping data for table `comment`
 --
 
-INSERT INTO `comment` (`comment_id`, `datenow`, `commentText`, `parent`, `user_id`) VALUES
-(1, '2019-06-22 12:28:03.000000', 'Hello', 1, 7),
-(2, '2019-06-25 03:16:17.000000', 'hi group buy', 1, 8),
-(4, '2019-06-25 15:34:07.000000', 'hi', 1, 8);
+INSERT INTO `comment` (`comment_id`, `datenow`, `commentText`, `deleted`, `parent`, `user_id`) VALUES
+(52, '0000-00-00 00:00:00.000000', 'hola', 0, NULL, 8),
+(54, '0000-00-00 00:00:00.000000', 'that\'s a great app', 0, 52, 8),
+(57, '2019-06-28 23:01:20.821371', 'jfd', 1, 52, 7),
+(63, '2019-06-28 22:58:49.000000', 'jfbvxjm', 0, NULL, 7),
+(64, '2019-06-28 23:01:26.918870', 'cx,nv,', 1, NULL, 7),
+(65, '2019-06-28 23:06:26.000000', 'congrats', 0, NULL, 7),
+(66, '2019-06-28 23:07:27.000000', 'ff', 0, NULL, 7),
+(67, '2019-06-28 23:09:19.000000', 'jm', 0, 52, 7);
 
 -- --------------------------------------------------------
 
@@ -104,10 +110,10 @@ CREATE TABLE `offer` (
 --
 
 INSERT INTO `offer` (`offer_number`, `offer_name`, `discount`, `image`, `start_date`, `end_date`, `user_id`, `deleted`) VALUES
-(3, 'minre', 50, 'product-1', '2019-06-01', '2019-06-22', 8, 1),
-(4, 'Very Hot', 50, 'product-2', '0000-00-00', '2019-07-31', 8, 0),
-(5, 'bride', 20, 'product-4', '2019-06-01', '2019-06-23', 8, 0),
-(6, 'make up', 30, 'product-1', '2018-12-31', '2019-01-01', 8, 0);
+(3, 'minre', 50, 'offer-1', '2019-06-01', '2019-06-22', 8, 0),
+(4, 'Very Hot', 50, 'offer-2', '0000-00-00', '2019-07-31', 8, 0),
+(5, 'bride', 20, 'offer-4', '2019-06-01', '2019-06-23', 8, 0),
+(6, 'make up', 30, 'offer-1', '2018-12-31', '2019-01-01', 8, 0);
 
 -- --------------------------------------------------------
 
@@ -155,7 +161,11 @@ INSERT INTO `order` (`order_id`, `offers_number`, `date_current`, `total_price`,
 (7, 1, '2019-06-28 17:00:20.000000', 50, 7),
 (8, 1, '2019-06-28 17:01:24.000000', 50, 7),
 (9, 1, '2019-06-28 17:04:04.000000', 50, 7),
-(10, 1, '2019-06-28 17:05:37.000000', 50, 7);
+(10, 1, '2019-06-28 17:05:37.000000', 50, 7),
+(11, 1, '2019-06-28 21:29:10.000000', 100, 7),
+(12, 1, '2019-06-29 15:07:31.000000', 10, 7),
+(13, 1, '2019-06-29 15:09:40.000000', 20, 7),
+(14, 1, '2019-06-29 15:11:22.000000', 0, 7);
 
 -- --------------------------------------------------------
 
@@ -178,7 +188,11 @@ INSERT INTO `order_line` (`order_line_id`, `quantity`, `order_id`, `offer_number
 (1, 2, 1, 3),
 (2, 1, 2, 4),
 (3, 3, 2, 3),
-(1849, 5, 10, 4);
+(1849, 5, 10, 4),
+(1850, 10, 11, 4),
+(1851, 1, 12, 4),
+(1852, 1, 13, 3),
+(1853, 2, 14, 5);
 
 -- --------------------------------------------------------
 
@@ -190,6 +204,7 @@ CREATE TABLE `product` (
   `product_id` int(20) NOT NULL,
   `product_name` varchar(50) NOT NULL,
   `discrption` text NOT NULL,
+  `img` varchar(20) NOT NULL,
   `category_id` int(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -197,8 +212,8 @@ CREATE TABLE `product` (
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`product_id`, `product_name`, `discrption`, `category_id`) VALUES
-(2, 'TV', 'Toshiba black', 3);
+INSERT INTO `product` (`product_id`, `product_name`, `discrption`, `img`, `category_id`) VALUES
+(2, 'TV', 'Toshiba black', '', 3);
 
 -- --------------------------------------------------------
 
@@ -255,8 +270,8 @@ CREATE TABLE `wish` (
   `discrption` text NOT NULL,
   `counter` int(5) NOT NULL,
   `status` varchar(30) NOT NULL,
-  `publishdate` datetime(6) DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
-  `cancel_date` datetime(6) DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+  `publishdate` datetime(6) DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(6),
+  `cancel_date` datetime(6) DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(6),
   `user_id` int(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -265,8 +280,8 @@ CREATE TABLE `wish` (
 --
 
 INSERT INTO `wish` (`wish_id`, `wishname`, `discrption`, `counter`, `status`, `publishdate`, `cancel_date`, `user_id`) VALUES
-(1, 'T-Shirt', 'Size: XLL, Color:red', 1, 'active', '2019-06-22 14:36:52.000000', '0000-00-00 00:00:00.000000', 7),
-(2, 'pan', 'cooking pan,\r\n\r\nSize: 30,\r\n\r\nColor: Silver', 5, 'cancled', NULL, '2019-06-26 00:00:00.000000', 7);
+(1, 'dvvv', 'dsgdb', 3, 'canceled', '2019-06-29 12:41:50.487107', '2019-06-29 12:41:50.000000', 7),
+(2, 'pan', 'cooking pan,\r\n\r\nSize: 30,\r\n\r\nColor: Silver', 2, 'cancled', '2019-06-29 12:22:06.170061', '2019-06-29 12:22:06.170061', 7);
 
 --
 -- Indexes for dumped tables
@@ -364,7 +379,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `comment_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `comment_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT for table `offer`
@@ -382,13 +397,13 @@ ALTER TABLE `offer_line`
 -- AUTO_INCREMENT for table `order`
 --
 ALTER TABLE `order`
-  MODIFY `order_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `order_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `order_line`
 --
 ALTER TABLE `order_line`
-  MODIFY `order_line_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1850;
+  MODIFY `order_line_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1854;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -406,7 +421,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `wish`
 --
 ALTER TABLE `wish`
-  MODIFY `wish_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `wish_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
@@ -417,12 +432,6 @@ ALTER TABLE `wish`
 --
 ALTER TABLE `buyer`
   ADD CONSTRAINT `buyer_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
-
---
--- Constraints for table `category`
---
-ALTER TABLE `category`
-  ADD CONSTRAINT `category_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `category` (`category_id`);
 
 --
 -- Constraints for table `comment`

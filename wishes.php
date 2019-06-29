@@ -25,13 +25,16 @@ include ('include/connection.php');
 	include ('include/functions.php');
 
 		$alertMessage="";
-	  $userId = $_SESSION['logInId'];
 
-	$query = "SELECT * FROM wish WHERE user_id= '$userId'";
+	$query = "SELECT * FROM wish ";
 	$result = mysqli_query($conn, $query);
 
 	if (mysqli_num_rows($result) > 0){
 		while($row = mysqli_fetch_assoc($result)) {
+            $qu="SELECT user_firstname FROM user WHERE user_id= ".$row['user_id'];
+            $res = mysqli_query($conn, $qu);
+            $row1= mysqli_fetch_assoc($res);
+            $row['user']=array_values($row1);
 			$mywishes[]=$row;
 		}
 	}else{
@@ -100,7 +103,7 @@ include ('include/connection.php');
 
                     <div ng-hide="showDetails === true">
 
-                        <p class="label label-primary label-sm">Name: <?php echo $_SESSION['loggedInUser'] ?></p>
+                        <p class="label label-primary label-sm">Name: <?php echo $val['user'][0] ?></p>
                         <p class="label label-primary label-sm">Wish Name: <?php echo $val['wishname']; ?></p>
                         <p class="label label-primary label-sm">Discription: <?php echo $val['discrption']; ?></p>
                         </h4>

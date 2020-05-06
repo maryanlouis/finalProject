@@ -1,2 +1,2 @@
-# finalProject
+# maryanlouis.github.io
 My Graduation Project
